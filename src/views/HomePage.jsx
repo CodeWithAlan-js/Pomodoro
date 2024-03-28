@@ -2,7 +2,8 @@ import Timer from "../components/Timer";
 import Header from "../components/Header";
 import { useState } from "react";
 import Setting from "../components/Setting";
-import { TimerProvider, useTimerContext } from "../components/TimerContext";
+import { TimerProvider } from "../components/TimerContext";
+import backgroundImage from "../assets/background-1.jpg";
 
 export default function HomePage() {
     const [isSettingOpen, setIsSettingOpen] = useState(false)
@@ -18,8 +19,7 @@ export default function HomePage() {
 
   return (
     <TimerProvider>
-    <div className="bg-[url('../assets/background-1.jpg')] bg-center bg-cover bg-no-repeat w-screen h-screen relative z-98">
-       <Header onSettingClick={handleSettingClick} ></Header>
+<div style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', width: '100vw', height: '100vh', position: 'relative', zIndex: '98' }}>       <Header onSettingClick={handleSettingClick} ></Header>
       <Timer></Timer>
       {isSettingOpen && <Setting onClose={handleCloseSetting} />}
     </div>
