@@ -18,7 +18,7 @@ export default function HomePage() {
 
   return (
     <TimerProvider>
-    <div className="bg-[url('src/assets/background-1.jpg')] bg-center bg-cover bg-no-repeat w-screen h-screen relative z-98">
+    <div className="bg-[url('../assets/background-1.jpg')] bg-center bg-cover bg-no-repeat w-screen h-screen relative z-98">
        <Header onSettingClick={handleSettingClick} ></Header>
       <Timer></Timer>
       {isSettingOpen && <Setting onClose={handleCloseSetting} />}
