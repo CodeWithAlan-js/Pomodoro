@@ -6,6 +6,7 @@ import breakSound from "../assets/EndSound.mp3";
 import { useTimerContext } from "./TimerContext";
 import "animate.css";
 import { ButtonsTimer } from "./ButtonsTimer";
+import { data } from "../data";
 
 export default function Timer() {
   const {
@@ -41,25 +42,25 @@ export default function Timer() {
     } else if (timer === 0) {
       playSound();
 
-      if (currentTimerType === "pomodoro") {
+      if (currentTimerType === data.pomodoro.name) {
         setTimer(shortBreak);
-        setCurrentTimerType("shortBreak");
+        setCurrentTimerType(data.shortBreak.name);
         setIsRunning(false);
-        setCurrentTimerType("shortBreak");
+        setCurrentTimerType(data.shortBreak.name);
         if (autoStartBreak) {
           setIsRunning(true);
         }
-      } else if (currentTimerType === "shortBreak") {
+      } else if (currentTimerType === data.shortBreak.name) {
         setTimer(longBreak);
-        setCurrentTimerType("longBreak");
-        setCurrentTimerType("longBreak");
+        setCurrentTimerType(data.longBreak.name);
+
         setIsRunning(true);
         if (autoStartPomodoro) {
           setIsRunning(true);
         }
       } else {
         setTimer(initialTimeFocus);
-        setCurrentTimerType("pomodoro");
+        setCurrentTimerType(data.pomodoro.name);
         setIsRunning(false);
       }
     }
@@ -107,19 +108,19 @@ export default function Timer() {
   const handleShortBreak = () => {
     setIsRunning(false);
     setTimer(shortBreak);
-    setCurrentTimerType("shortBreak");
+    setCurrentTimerType(data.shortBreak.name);
   };
 
   const handlePomodoroTime = () => {
     setIsRunning(false);
     setTimer(initialTimeFocus);
-    setCurrentTimerType("pomodoro");
+    setCurrentTimerType(data.pomodoro.name);
   };
 
   const handleLongBreak = () => {
     setIsRunning(false);
     setTimer(longBreak);
-    setCurrentTimerType("longBreak");
+    setCurrentTimerType(data.longBreak.name);
   };
 
   const buttonStyles = "cursor-pointer color-white opacity-50 duration-300";
@@ -131,30 +132,30 @@ export default function Timer() {
           <ButtonsTimer
             onClick={() => {
               handlePomodoroTime();
-              setSelectedTimer("pomodoro");
+              setSelectedTimer(data.pomodoro.name);
             }}
             label="Pomodoro"
-            isSelected={selectedTimer === "pomodoro"}
+            isSelected={selectedTimer === data.pomodoro.name}
             animationClass="animate__backInLeft"
           />
 
           <ButtonsTimer
             onClick={() => {
               handleShortBreak();
-              setSelectedTimer("shortBreak");
+              setSelectedTimer(data.shortBreak.name);
             }}
             label="Short Break"
-            isSelected={selectedTimer === "shortBreak"}
+            isSelected={selectedTimer === data.shortBreak.name}
             animationClass="animate__backInDown"
           />
 
           <ButtonsTimer
             onClick={() => {
               handleLongBreak();
-              setSelectedTimer("longBreak");
+              setSelectedTimer(data.longBreak.name);
             }}
             label="Long Break"
-            isSelected={selectedTimer === "longBreak"}
+            isSelected={selectedTimer === data.longBreak.name}
             animationClass="animate__backInRight"
           />
         </div>

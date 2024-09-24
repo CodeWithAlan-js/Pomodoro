@@ -1,21 +1,22 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
+import { data } from "../data";
 
 const TimerContext = createContext();
 
 export const TimerProvider = ({ children }) => {
-  const [initialTimeFocus, setInitialTimeFocus] = useState(25 * 60);
-  const [shortBreak, setShortBreak] = useState(5 * 60);
-  const [longBreak, setLongBreak] = useState(15 * 60);
+  const [initialTimeFocus, setInitialTimeFocus] = useState(data.pomodoro.time);
+  const [shortBreak, setShortBreak] = useState(data.shortBreak.time);
+  const [longBreak, setLongBreak] = useState(data.longBreak.time);
   const [timer, setTimer] = useState(initialTimeFocus);
   const [isRunning, setIsRunning] = useState(false);
-  const [currentTimerType, setCurrentTimerType] = useState("pomodoro");
+  const [currentTimerType, setCurrentTimerType] = useState(data.pomodoro.name);
   const [autoStartBreak, setAutoStartBreak] = useState(false);
   const [autoStartPomodoro, setAutoStartPomodoro] = useState(false);
-  const [selectedTimer, setSelectedTimer] = useState("pomodoro")
+  const [selectedTimer, setSelectedTimer] = useState(data.pomodoro.name);
 
   const updateTimer = (newTime) => {
-    setTimer(newTime)
-  }
+    setTimer(newTime);
+  };
 
   return (
     <TimerContext.Provider
@@ -38,7 +39,7 @@ export const TimerProvider = ({ children }) => {
         autoStartPomodoro,
         setAutoStartPomodoro,
         setSelectedTimer,
-        selectedTimer
+        selectedTimer,
       }}
     >
       {children}

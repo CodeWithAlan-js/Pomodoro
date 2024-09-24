@@ -1,10 +1,13 @@
-import React from "react";
 import { FaAngleRight } from "react-icons/fa6";
 import { Button } from "@material-tailwind/react";
-import 'animate.css';
+import "animate.css";
 
-
-export  const ButtonsTimer = ({ onClick, label, isSelected, animationClass }) => (
+export const ButtonsTimer = ({
+  onClick,
+  label,
+  isSelected,
+  animationClass,
+}) => (
   <Button
     size="lg"
     color="white"
@@ -15,10 +18,10 @@ export  const ButtonsTimer = ({ onClick, label, isSelected, animationClass }) =>
     {label}
     {isSelected && (
       <FaAngleRight
-      ripple='false'
+        ripple="false"
         color="white"
         size={26}
-        className="absolute color-white z-99 top-3 left-0 "
+        className="absolute color-white z-99 top-3 left-0 animate-bounce "
       />
     )}
   </Button>

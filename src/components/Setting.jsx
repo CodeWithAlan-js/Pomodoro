@@ -1,12 +1,12 @@
 import { IoMdClose } from "react-icons/io";
-import { useState } from "react";
+import { useRef, useEffect } from "react";
 import { FaAppleAlt } from "react-icons/fa";
 import { Switch } from "@material-tailwind/react";
 import { Input } from "@material-tailwind/react";
 import { useTimerContext } from "./TimerContext";
+import { data } from "../data";
 
 export default function Setting({ onClose }) {
-
   const {
     initialTimeFocus,
     shortBreak,
@@ -22,48 +22,74 @@ export default function Setting({ onClose }) {
     setSelectedTimer,
   } = useTimerContext();
 
+  const closeRef = useRef();
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (closeRef.current && !closeRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const handleCloseClick = () => {
     onClose();
   };
 
   const handleUpdatePomodoroTime = (newValue) => {
+    if (newValue <= 60) {
+      newValue = 60;
+    }
     setInitialTimeFocus(newValue);
     updateTimer(newValue);
-    setSelectedTimer('pomodoro')
+    setSelectedTimer(data.pomodoro.name);
   };
 
   const handleUpdateShortBreak = (newValue) => {
+    if (newValue <= 60) {
+      newValue = 60;
+    }
     setShortBreak(newValue);
     updateTimer(newValue);
-    setSelectedTimer('shortBreak')
+    setSelectedTimer(data.shortBreak.name);
   };
 
   const handleUpdateLongBreak = (newValue) => {
+    if (newValue <= 60) {
+      newValue = 60;
+    }
     setLongBreak(newValue);
     updateTimer(newValue);
-    setSelectedTimer('longBreak')
+    setSelectedTimer(data.longBreak.name);
   };
 
   const handleUpdateStartBreak = () => {
     setAutoStartBreak(!autoStartBreak);
   };
-  
+
   const handleUpdateStartPomodoro = () => {
     setAutoStartPomodoro(!autoStartPomodoro);
   };
 
   return (
     <div className="flex justify-end items-center w-screen h-screen absolute z-99 top-0 left-0">
-      <div className="absolute p-5 top-0 min-w-96  bg-white flex flex-col opacity-100 rounded animate__animated animate__fadeIn">
+      <div
+        ref={closeRef}
+        className="absolute p-5 top-0 min-w-96 bg-white flex flex-col opacity-100 rounded animate__animated animate__fadeIn"
+      >
         <div className="relative w-full flex justify-between items-center border-b border-t-0 border-l-0 border-r-0 border-black border-solid">
           <div>
             <p className="m-4">Setting</p>
           </div>
           <IoMdClose
             size={30}
-            className=" mr-2 cursor-pointer hover:opacity-50 duration-300"
+            className="mr-2 cursor-pointer hover:opacity-50 duration-300"
             onClick={handleCloseClick}
           />
         </div>
@@ -99,9 +125,7 @@ export default function Setting({ onClose }) {
                   type="number"
                   min={1}
                   value={shortBreak / 60}
-                  onChange={(e) =>
-                    handleUpdateShortBreak(e.target.value * 60)
-                  }
+                  onChange={(e) => handleUpdateShortBreak(e.target.value * 60)}
                 />
               </div>
             </div>
@@ -120,17 +144,17 @@ export default function Setting({ onClose }) {
             </div>
           </div>
         </div>
-        <div className=" mt-10 flex flex-col justify-center items-center">
-          <div className=" w-4/5 flex flex-col justify-center">
+        <div className="mt-10 flex flex-col justify-center items-center">
+          <div className="w-4/5 flex flex-col justify-center">
             <div className="flex justify-evenly mb-5">
-              <p className=" font-bold">Auto Start breaks</p>
+              <p className="font-bold">Auto Start breaks</p>
               <Switch
                 color="green"
                 checked={autoStartBreak}
                 onChange={handleUpdateStartBreak}
               />
             </div>
-            <div className="flex  justify-evenly">
+            <div className="flex justify-evenly">
               <p className="font-bold">Auto Start Pomodoros</p>
               <Switch
                 color="green"
